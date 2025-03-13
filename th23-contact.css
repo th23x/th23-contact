@@ -1,0 +1,111 @@
+/* colors - backgrounds = rgba($color, 0.2) on #fff background */
+.th23-contact-message.error {
+  border-color: #cc0000;
+  background-color: #f6d0d0;
+}
+.th23-contact-message.info {
+  border-color: #ff8c00;
+  background-color: #ffead0;
+}
+.th23-contact-message.success {
+  border-color: #009100;
+  background-color: #d0ebd0;
+}
+
+.th23-contact-form .error input, .th23-contact-form .error textarea {
+  border-color: #cc0000;
+  background-color: #f6d0d0;
+}
+.th23-contact-form .error label, .th23-contact-form .error + .description {
+  color: #cc0000;
+}
+.th23-contact-form .info input, .th23-contact-form .info textarea {
+  border-color: #ff8c00;
+  background-color: #ffead0;
+}
+.th23-contact-form .info label, .th23-contact-form .info + .description {
+  color: #ff8c00;
+}
+.th23-contact-form .success input, .th23-contact-form .success textarea {
+  border-color: #009100;
+  background-color: #d0ebd0;
+}
+.th23-contact-form .success label, .th23-contact-form .success + .description {
+  color: #009100;
+}
+
+/* message */
+.th23-contact-message {
+  border-left: 4px solid;
+  margin: 0 0 10px;
+  padding: 12px;
+  color: #000000;
+}
+.th23-contact-message.editor {
+  border-width: 0 0 0 4px;
+  margin: 0;
+}
+
+/* contact form */
+.th23-contact-form {
+  /* hints - required, captcha explanation */
+  /* descriptions */
+}
+.th23-contact-form form p {
+  margin-bottom: 0.5em;
+}
+.th23-contact-form form p:last-child {
+  margin-top: 1em;
+  margin-bottom: 1.5em;
+}
+.th23-contact-form label, .th23-contact-form .button {
+  margin-right: 0.5em;
+}
+.th23-contact-form :not(.disabled) input[type=checkbox], .th23-contact-form :not(.disabled) label {
+  cursor: pointer;
+}
+.th23-contact-form input::placeholder {
+  opacity: 0;
+}
+.th23-contact-form span.required:before {
+  margin-left: 0.1em;
+  content: "*";
+  color: #cc0000;
+}
+.th23-contact-form span[data-hint] {
+  position: relative;
+  cursor: help;
+}
+.th23-contact-form span[data-hint]:after {
+  position: absolute;
+  bottom: 95%;
+  left: -40px;
+  white-space: pre-line;
+  opacity: 0.92;
+  border: 1px solid #CCC;
+  border-radius: 3px;
+  background: #FAFAFA;
+  padding: 3px 8px;
+  color: #333;
+  font-size: 14px;
+  box-shadow: 1px 1px 3px rgba(100, 100, 100, 0.6);
+}
+.th23-contact-form span[data-hint]:hover:after {
+  content: attr(data-hint);
+}
+.th23-contact-form label[for=captcha] {
+  cursor: help;
+}
+.th23-contact-form label[for=captcha]:hover > span[data-hint]:after {
+  content: attr(data-hint);
+  width: 300px;
+}
+.th23-contact-form .sessions .description {
+  display: block;
+}
+html:not(.no-js) .th23-contact-form .input-wrap:not(.error):not(.disabled) + .description:not(.permanent) {
+  display: none;
+}
+html:not(.no-js) .th23-contact-form .input-wrap:not(.error):not(.disabled).focus + .description:not(.permanent) {
+  display: initial;
+}

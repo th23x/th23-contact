@@ -1,0 +1,485 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-19 11:29+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: th23-contact.php:134
+#, php-format
+msgid "You must be <a href=\"%s\">logged in</a> to use the contact form."
+msgstr ""
+
+#: th23-contact.php:148
+msgid "Invalid request - please fill out the form below and try again"
+msgstr ""
+
+#: th23-contact.php:158
+msgid ""
+"Sorry, you do not seem to be human - please solve the captcha shown to proof "
+"otherwise"
+msgstr ""
+
+#: th23-contact.php:164 th23-contact.php:278 th23-contact-admin.php:191
+msgid "Terms of Usage"
+msgstr ""
+
+#. translators: %s: title of terms & conditions page, as defined by admin
+#: th23-contact.php:166
+#, php-format
+msgid "Please accept the %s and agree with processing your data"
+msgstr ""
+
+#: th23-contact.php:179
+msgid "Please enter your name"
+msgstr ""
+
+#: th23-contact.php:183
+msgid "Please enter your e-mail address"
+msgstr ""
+
+#: th23-contact.php:186
+msgid "Please enter your valid e-mail address"
+msgstr ""
+
+#: th23-contact.php:191
+msgid "Please enter a message"
+msgstr ""
+
+#: th23-contact.php:198
+msgid "New message"
+msgstr ""
+
+#: th23-contact.php:199
+msgid "visitor"
+msgstr ""
+
+#. translators: mail body to send with user message - 1: user display name, 2: user login, 3: user message, 4: reply e-mail address
+#: th23-contact.php:201
+#, php-format
+msgid ""
+"%1$s (%2$s) sent you the following message via the contact form:\n"
+"\n"
+"%3$s\n"
+"\n"
+"---\n"
+"Reply e-mail: %4$s"
+msgstr ""
+
+#: th23-contact.php:209
+msgid "Your message could not be sent due to an error - please try again"
+msgstr ""
+
+#: th23-contact.php:212
+msgid "Your message has been sent - thank you"
+msgstr ""
+
+#: th23-contact.php:248
+msgid "Name"
+msgstr ""
+
+#: th23-contact.php:248 th23-contact.php:256 th23-contact.php:271
+#: th23-contact.php:283
+msgid "Required"
+msgstr ""
+
+#: th23-contact.php:256
+msgid "E-mail"
+msgstr ""
+
+#: th23-contact.php:263
+msgid "Subject"
+msgstr ""
+
+#: th23-contact.php:271
+msgid "Message"
+msgstr ""
+
+#. translators: %s: link with/or title to page with terms & conditions, as defined by admin
+#. translators: %s: link with/or title to sites terms & conditions, as defined by admin
+#: th23-contact.php:283 th23-contact-admin.php:196
+#, php-format
+msgid "I accept the %s and agree with processing my data"
+msgstr ""
+
+#. translators: "&#xa;" initiates a line break using this text as a tooltip, "&#128161;" light bulb symbol, "&#128077;" thumbs up sign
+#: th23-contact.php:293
+msgid ""
+"Required&#xa;&#128161; What? A captcha is a small test aiming to distinguish "
+"humans from computers.&#xa;&#128077; Why? Internet today needs to fight a "
+"lot of spam and this small test is required to keep this website clean."
+msgstr ""
+
+#: th23-contact.php:294
+msgid "Captcha"
+msgstr ""
+
+#: th23-contact.php:297
+msgid "Confirm being a human"
+msgstr ""
+
+#: th23-contact.php:303
+msgid "Send"
+msgstr ""
+
+#: th23-contact-admin.php:64
+msgid "Hide settings descriptions"
+msgstr ""
+
+#: th23-contact-admin.php:73
+msgid "Settings and support"
+msgstr ""
+
+#: th23-contact-admin.php:74
+msgid ""
+"<p>You can find video tutorials explaning the plugin settings on <a href="
+"\"https://www.youtube.com/channel/UCS3sNYFyxhezPVu38ESBMGA\">my YouTube "
+"channel</a>.</p><p>More details and explanations are available on <a href="
+"\"https://th23.net/th23-contact-support/\">my Frequently Asked Questions "
+"(FAQ) page</a> or the <a href=\"https://wordpress.org/support/plugin/th23-"
+"contact/\">plugin support section on WordPress.org</a>.</p>"
+msgstr ""
+
+#: th23-contact-admin.php:77
+msgid ""
+"<p>Support me by <a href=\"https://wordpress.org/support/plugin/th23-contact/"
+"reviews/#new-post\">leaving a review</a> or check out some of <a href="
+"\"https://wordpress.org/plugins/search/th23/\">my other plugins</a> "
+"<strong>:-)</strong></p>"
+msgstr ""
+
+#: th23-contact-admin.php:83
+#, php-format
+msgid "This option is only available with the %1$s version of this plugin"
+msgstr ""
+
+#: th23-contact-admin.php:87
+msgid ""
+"Limit usage of contact shortcode to selected pages / posts, reducing "
+"unnecessary CSS loading - leave empty to use on all pages and posts"
+msgstr ""
+
+#. translators: inserts shortcode
+#: th23-contact-admin.php:89
+#, php-format
+msgid ""
+"Important: Requires contact shortcode %s placed in page / post to show "
+"contact form"
+msgstr ""
+
+#: th23-contact-admin.php:90
+msgid "Note: Shortcode can only be used once per page / post"
+msgstr ""
+
+#: th23-contact-admin.php:93
+msgid "Pages / Posts"
+msgstr ""
+
+#: th23-contact-admin.php:98
+msgid "All pages"
+msgstr ""
+
+#: th23-contact-admin.php:99
+msgid "All posts"
+msgstr ""
+
+#. translators: %s is page title
+#: th23-contact-admin.php:109
+#, php-format
+msgid "Page: %s"
+msgstr ""
+
+#. translators: %s is post title
+#: th23-contact-admin.php:115
+#, php-format
+msgid "Post: %s"
+msgstr ""
+
+#: th23-contact-admin.php:123
+msgid "Recipient"
+msgstr ""
+
+#. translators: %1$s / %2$s <a> and </a> tags for link to insert admin mail, %3$s current general admin e-mail address
+#: th23-contact-admin.php:125
+#, php-format
+msgid ""
+"Provide mail address for contact form submissions - %1$sclick here%2$s to "
+"use your default admin e-mail address (%3$s)"
+msgstr ""
+
+#: th23-contact-admin.php:134
+msgid "Subject prefix"
+msgstr ""
+
+#: th23-contact-admin.php:135
+msgid ""
+"Optional prefix to be added before the subject of mails sent from the "
+"contact form"
+msgstr ""
+
+#: th23-contact-admin.php:142
+msgid "Visitors"
+msgstr ""
+
+#: th23-contact-admin.php:143
+msgid ""
+"If disabled, unregistered visitors will see a notice requiring them to login "
+"for sending a message"
+msgstr ""
+
+#: th23-contact-admin.php:148
+msgid "Enable contact form for unregistered users"
+msgstr ""
+
+#. translators: : "reCaptcha v2" as name of the service, 2: "Google" as provider name, 3/4: opening and closing tags for a link to Google reCaptcha website
+#: th23-contact-admin.php:160
+#, php-format
+msgid ""
+"Important: %1$s is an external service by %2$s which requires %3$ssigning up "
+"for free keys%4$s - usage will embed external scripts and transfer data to "
+"%2$s"
+msgstr ""
+
+#: th23-contact-admin.php:165
+msgid ""
+"Unregistered users need to solve a captcha for better protection against "
+"spam and bots"
+msgstr ""
+
+#: th23-contact-admin.php:176
+msgid "Public Key"
+msgstr ""
+
+#: th23-contact-admin.php:184
+msgid "Secret Key"
+msgstr ""
+
+#: th23-contact-admin.php:193
+msgid "Show / hide examples"
+msgstr ""
+
+#: th23-contact-admin.php:194
+msgid "Example:"
+msgstr ""
+
+#. translators: %s: link to general options page in admin
+#: th23-contact-admin.php:198
+#, php-format
+msgid "Note: For changing title and link shown see %s"
+msgstr ""
+
+#: th23-contact-admin.php:198
+msgid "General Settings"
+msgstr ""
+
+#: th23-contact-admin.php:202
+msgid "Terms"
+msgstr ""
+
+#: th23-contact-admin.php:208
+msgid ""
+"Unregistered users are required to accept terms of usage before sending "
+"their message"
+msgstr ""
+
+#. translators: "Professional" as name of the version
+#: th23-contact-admin.php:233
+#, php-format
+msgid "Upgrade to %s version"
+msgstr ""
+
+#: th23-contact-admin.php:479
+msgid "Upload Professional extension?"
+msgstr ""
+
+#: th23-contact-admin.php:482
+msgid "Go to plugin settings page for upload..."
+msgstr ""
+
+#. translators: 1: "Professional" as name of the version, 2: link to "th23.net" plugin download page, 3: link to "Go to plugin settings page to upload..." page or "Upload updated Professional extension?" link
+#: th23-contact-admin.php:485
+#, php-format
+msgid ""
+"Due to an update the previously installed %1$s extension is missing. Please "
+"get the latest version of the %1$s extension from %2$s. %3$s"
+msgstr ""
+
+#: th23-contact-admin.php:486 th23-contact-admin.php:520
+#: th23-contact-admin.php:525 th23-contact-admin.php:1052
+#: th23-contact-admin.php:1060 th23-contact-admin.php:1071
+#: th23-contact-admin.php:1082 th23-contact-admin.php:1196
+#: th23-contact-admin.php:1322 th23-contact-admin.php:1330
+msgid "Error"
+msgstr ""
+
+#: th23-contact-admin.php:515
+msgid "Warning"
+msgstr ""
+
+#: th23-contact-admin.php:515
+msgid ""
+"Your are running a multisite installation - the plugin is not designed for "
+"this setup and therefore might not work properly"
+msgstr ""
+
+#: th23-contact-admin.php:520 th23-contact-admin.php:1322
+msgid ""
+"No valid e-mail address is specified as recipient - despite your settings "
+"the plugin will be disabled until you specify one"
+msgstr ""
+
+#. translators: Parses in "reCaptcha v2" as service name
+#: th23-contact-admin.php:527 th23-contact-admin.php:1332
+#, php-format
+msgid ""
+"%s requires a public and a private key to work - despite your settings it "
+"will be disabled until you define them"
+msgstr ""
+
+#: th23-contact-admin.php:551
+msgid "Settings"
+msgstr ""
+
+#. translators: parses in plugin version number (optionally) together with upgrade link
+#: th23-contact-admin.php:562 th23-contact-admin.php:566
+#: th23-contact-admin.php:1005 th23-contact-admin.php:1009
+#, php-format
+msgid "Version %s"
+msgstr ""
+
+#: th23-contact-admin.php:570 th23-contact-admin.php:1024
+msgid "Support"
+msgstr ""
+
+#: th23-contact-admin.php:785 th23-contact-admin.php:1112
+#: th23-contact-admin.php:1119
+msgid "Done"
+msgstr ""
+
+#: th23-contact-admin.php:785
+msgid "Settings saved"
+msgstr ""
+
+#: th23-contact-admin.php:863
+msgid "+"
+msgstr ""
+
+#: th23-contact-admin.php:925
+msgid "-"
+msgstr ""
+
+#: th23-contact-admin.php:990
+msgid "Save Changes"
+msgstr ""
+
+#: th23-contact-admin.php:1013
+msgid "Upload upgrade"
+msgstr ""
+
+#. translators: parses in plugin author name
+#: th23-contact-admin.php:1022
+#, php-format
+msgid "By %s"
+msgstr ""
+
+#: th23-contact-admin.php:1027
+msgid "Visit plugin site"
+msgstr ""
+
+#: th23-contact-admin.php:1046
+msgid "Try again?"
+msgstr ""
+
+#. translators: parses in "Try again?" link
+#: th23-contact-admin.php:1054
+#, php-format
+msgid ""
+"Your server can not handle zip files. Please extract it locally and try "
+"again with the individual files. %s"
+msgstr ""
+
+#. translators: parses in "Try again?" link
+#: th23-contact-admin.php:1062
+#, php-format
+msgid "Failed to open zip file. %s"
+msgstr ""
+
+#. translators: parses in "Try again?" link
+#: th23-contact-admin.php:1073
+#, php-format
+msgid ""
+"Zip file seems to contain files not belonging to the Professional extension. "
+"%s"
+msgstr ""
+
+#. translators: parses in "Try again?" link
+#: th23-contact-admin.php:1084
+#, php-format
+msgid "This does not seem to be a proper Professional extension file. %s"
+msgstr ""
+
+#: th23-contact-admin.php:1111
+msgid "Upload missing file(s)!"
+msgstr ""
+
+#. translators: parses in "Upload missing files!" link
+#. translators: parses in "Reload page to see Professional settings!" link
+#: th23-contact-admin.php:1114 th23-contact-admin.php:1121
+#, php-format
+msgid "Professional extension file uploaded. %s"
+msgstr ""
+
+#: th23-contact-admin.php:1118
+msgid "Reload page to see Professional settings!"
+msgstr ""
+
+#. translators: 1: option name, 2: opening a tag of link to support/ plugin page, 3: closing a tag of link
+#: th23-contact-admin.php:1198
+#, php-format
+msgid ""
+"Invalid combination of input field and default value for \"%1$s\" - please "
+"%2$scontact the plugin author%3$s"
+msgstr ""
+
+#: th23-contact-admin.php:1257
+#, php-format
+msgid "Copy from %s"
+msgstr ""
+
+#: th23-contact-admin.php:1281
+msgid "Legal information"
+msgstr ""
+
+#: th23-contact-admin.php:1285
+msgid "Title"
+msgstr ""
+
+#: th23-contact-admin.php:1291
+msgid "If left empty, &quot;Terms of Usage&quot; will be used"
+msgstr ""
+
+#: th23-contact-admin.php:1297
+msgid "URL"
+msgstr ""
+
+#: th23-contact-admin.php:1303
+msgid "Can be relative URL - if left empty, no link will be added"
+msgstr ""
+
+#: th23-contact-admin.php:1309
+msgid ""
+"Reference a page providing user with legally required information about "
+"terms of usage, impressum and data provacy policy"
+msgstr ""
