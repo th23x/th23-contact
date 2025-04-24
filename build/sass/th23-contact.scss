@@ -1,0 +1,168 @@
+/* colors - backgrounds = rgba($color, 0.2) on #fff background */
+$error-border: #cc0000;
+$error-background: #f6d0d0;
+$info-border: #ff8c00;
+$info-background: #ffead0;
+$success-border: #009100;
+$success-background: #d0ebd0;
+.th23-contact-message {
+
+	&.error {
+		border-color: $error-border;
+		background-color: $error-background;
+	}
+
+	&.info {
+		border-color: $info-border;
+		background-color: $info-background;
+	}
+
+	&.success {
+		border-color: $success-border;
+		background-color: $success-background;
+	}
+}
+.th23-contact-form {
+
+	& .error {
+
+		& input,
+		& textarea {
+			border-color: $error-border;
+			background-color: $error-background;
+		}
+
+		& label,
+		& + .description {
+			color: $error-border;
+		}
+	}
+
+	& .info {
+
+		& input,
+		& textarea {
+			border-color: $info-border;
+			background-color: $info-background;
+		}
+
+		& label,
+		& + .description {
+			color: $info-border;
+		}
+	}
+
+	& .success {
+
+		& input,
+		& textarea {
+			border-color: $success-border;
+			background-color: $success-background;
+		}
+
+		& label,
+		& + .description {
+			color: $success-border;
+		}
+	}
+}
+
+/* message */
+.th23-contact-message {
+	border-left: 4px solid;
+	margin: 0 0 10px;
+	padding: 12px;
+	color: #000000;
+
+	&.editor {
+		border-width: 0 0 0 4px;
+		margin: 0;
+	}
+}
+
+/* contact form */
+.th23-contact-form {
+
+	& form p {
+		margin-bottom: 0.5em;
+
+		&:last-child {
+			margin-top: 1em;
+			margin-bottom: 1.5em;
+		}
+	}
+
+	& label,
+	& .button {
+		margin-right: 0.5em;
+	}
+
+	& :not(.disabled) {
+		& input[type="checkbox"],
+		& label {
+			cursor: pointer;
+		}
+	}
+
+	& input::placeholder {
+		opacity: 0;
+	}
+
+	/* hints - required, captcha explanation */
+	& span {
+
+		&.required:before {
+			margin-left: .1em;
+			content: "*";
+			color: $error-border;
+		}
+
+		&[data-hint] {
+			position: relative;
+			cursor: help;
+
+			&:after {
+				position: absolute;
+				bottom: 95%;
+				left: -40px;
+				white-space: pre-line;
+				opacity: .92;
+				border: 1px solid #CCC;
+				border-radius: 3px;
+				background: #FAFAFA;
+				padding: 3px 8px;
+				color: #333;
+				font-size: 14px;
+				box-shadow: 1px 1px 3px rgba(100, 100, 100, .6);
+			}
+
+			&:hover:after {
+				content: attr(data-hint);
+			}
+		}
+	}
+	& label[for="captcha"] {
+		cursor: help;
+
+		&:hover > span[data-hint]:after {
+			content: attr(data-hint);
+			width: 300px;
+		}
+	}
+
+	/* descriptions */
+	& .sessions .description {
+		display: block;
+	}
+
+	html:not(.no-js) & .input-wrap:not(.error):not(.disabled) {
+
+		& + .description:not(.permanent) {
+			display: none;
+		}
+
+		&.focus + .description:not(.permanent) {
+			display: initial;
+		}
+	}
+}

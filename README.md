@@ -1,6 +1,7 @@
-# <img alt="th23 Contact" src="assets/icon-horizontal.png" width="200">
+# <img alt="th23 Contact" src="https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/icon-horizontal.png?v=3.1.0" width="200">
 
-Simple contact form via block or legacy shortcode, optional spam protection for messages by not-registered visitors
+Simple contact form via block or legacy shortcode with optional spam protection via Akismet and reCaptcha
+
 
 ## 🚀 Introduction
 
@@ -8,7 +9,7 @@ Provide your users and visitors a **simple and straight forward contact form**.
 
 The **modern design** is very clear, easy to navigate and with light-weight JS and CSS code. One big benefit is its **flexible positioning** in pages and posts as a **modern style block or classic shortcode**.
 
-To keep your website safe, it comes with built in **spam and bot protection**, by using reCaptcha for messages sent by visitors. The plugin is continuously improved and used on live websites since 2012.
+To keep your website safe, it comes with built in **spam and bot protection**, by using Akisment and reCaptcha for messages sent by visitors. The plugin is continuously improved and used on live websites since 2012.
 
 th23 Contact is built with some few goals in mind:
 
@@ -19,9 +20,9 @@ th23 Contact is built with some few goals in mind:
 
 See it in action on my [Contact page](https://th23.net/contact/).
 
-> <img alt="" title="Contact form (logged in user)" src="assets/screenshot-1.jpg" width="400">
-> <img alt="" title="Contact form (visitor, needs to solve captcha)" src="assets/screenshot-2.jpg" width="400">
-> <img alt="" title="Plugin settings" src="assets/screenshot-3.jpg" width="400">
+> <img alt="" title="Contact form (logged in user)" src="https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-1.jpg?v=3.1.0" width="400">
+> <img alt="" title="Contact form (visitor, needs to solve captcha)" src="https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-2.jpg?v=3.1.0" width="400">
+> <img alt="" title="Plugin settings" src="https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-3.jpg?v=3.1.0" width="400">
 
 
 ## ⚙️ Setup
@@ -38,7 +39,7 @@ Simply insert a new `th23 Contact form` block into the post / page using the plu
 Alternatively use the `[th23-contact]` shortcode directly in the source code editor view of a post / page or insert it as a **legacy shortcode block**.
 
 > [!NOTE]
-> The th23 Contact form block and / or shortcode can only be used once per post / page!
+> The th23 Contact form block and / or shortcode **can only be used once per post / page**!
 >
 > Any second instance in the same post / page will be ignored upon frontend rendering and not show up.
 
@@ -48,18 +49,24 @@ Alternatively use the `[th23-contact]` shortcode directly in the source code edi
 
 ## ❓ FAQ
 
-Q: Can the plugin be activated on **multiple selected pages / posts only**?
+### Q: Despite reCaptcha being activated, **I receive many spam contact messages**? ###
+
+A: reCaptcha is around for a long time and available in various versions. Its version 2 was added to this plugin some years ago. Unfortunately with latest advances in computing, **it has to be considered "broken" by now**.
+
+Since version 3.1.0 of this plugin, there is (additionally) the **option to use Akismet to detect spam**. It uses a much broader approach and thus for now seems to show significatly better detection of spam. **Activate it on the plugins settings page**.
+
+### Q: Can the plugin be activated on **multiple selected pages / posts only**? ###
 
 A: You can enable the block / shortcode for selected pages / posts only to **save your users unnecessarily loading JavaScript and CSS files**.
 
-But for convenience the `th23 Contact` block / `[th23-contact]` shortcode can also be enabled for `All pages`, `All posts` or an selected set of pages / posts. Simply visit the plugin settings in your admin area. Under 'Pages / Posts' you have the free choice.
+But for convenience the `th23 Contact` block / `[th23-contact]` shortcode can also be enabled for `All pages`, `All posts` or an selected set of pages / posts. Simply visit the plugin settings in your admin area. Under "Pages / Posts" you have the free choice.
 
-To select multiple items on a PC simply keep the 'Ctrl' key pressed any click on the pages / posts you want to select.
+To select multiple items on a PC simply keep the "Ctrl" key pressed any click on the pages / posts you want to select.
 
 
 ## 🤝 Contributors
 
-Feel free to [raise issues](../../issues) or [contribute code](../../pulls) for improvements via GitHub.
+Feel free to [raise issues](https://github.com/th23x/th23-contact/issues) or [contribute code](https://github.com/th23x/th23-contact/pulls) for improvements via GitHub.
 
 
 ## ©️ License

@@ -2,7 +2,7 @@
 /*
 Plugin Name: th23 Contact
 Description: Simple contact form via block or legacy shortcode, optional spam and bot protection for messages by not-registered visitors
-Version: 3.0.7
+Version: 3.1.0
 Author: Thorsten Hartmann (th23)
 Author URI: https://th23.net
 License: GPL-3.0-or-later
@@ -33,7 +33,7 @@ class th23_contact {
 		$this->plugin['file'] = __FILE__;
 		$this->plugin['basename'] = plugin_basename($this->plugin['file']);
 		$this->plugin['dir_url'] = plugin_dir_url($this->plugin['file']);
-		$this->plugin['version'] = '3.0.7';
+		$this->plugin['version'] = '3.1.0';
 
 		// Load plugin options
 		$this->options = (array) get_option($this->plugin['slug']);
@@ -131,7 +131,137 @@ class th23_contact {
 
 	}
 
-	// Handle contact form shortcodes
+	// Akismet API for spam detection
+	// action: verify-key / check-contact
+	// return: 1 = okay, valid, ham, no spam / 0 = not checked, timeout, error, ... / -1 = failed, invalid, spam
+	function akismet_api($action = '', $data = array()) {
+
+		$answer = 0;
+
+		// verify api key
+		if('verify-key' == $action && !empty($data['api_key'])) {
+			$path = '/1.1/verify-key';
+			$positive = 'valid';
+			$negative = 'invalid';
+		}
+		// check contact message
+		elseif('check-contact' == $action) {
+			$data['api_key'] = $this->options['spam_key_verified'];
+			$path = '/1.1/comment-check';
+			// note: false = ham / true = spam
+			$positive = 'false';
+			$negative = 'true';
+			// contact page details
+			$data['permalink'] = get_permalink();
+			$data['comment_type'] = 'contact-form';
+			$data['comment_post_modified_gmt'] = get_post_modified_time();
+			$data['comment_context'] = array('contact', 'form');
+			// contact message details - to be submitted via $data array upon api call
+			// example: $this->akismet_api('check-contact', array('comment_author' => '', 'comment_author_email' => '', 'comment_content' => ''))
+			// note: "comment_date_gmt" is automatically assumed to be now, if not specified / "comment_author_url" is optional and contact form does not allow such field
+		}
+		// no valid action
+		else {
+			return $answer;
+		}
+
+		// no action without key
+		if(empty($data['api_key'])) {
+			return $answer;
+		}
+
+		// add data relevant for all actions
+		// network
+		if(!empty($_SERVER['REMOTE_ADDR'])) {
+			$data['user_ip'] = $_SERVER['REMOTE_ADDR'];
+		}
+		if(!empty($_SERVER['HTTP_USER_AGENT'])) {
+			$data['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+		}
+		if(!empty($_SERVER['HTTP_REFERER'])) {
+			$data['referrer'] = $_SERVER['HTTP_REFERER'];
+		}
+		// user
+		$data['user_role'] = 'visitor';
+		if(is_user_logged_in()) {
+			// users should only be assigned one role, but $user->roles can be an array, determine "highest" assigned default role
+			$user = wp_get_current_user();
+			if(in_array('administrator', $user->roles)) {
+				$data['user_role'] = 'administrator';
+			}
+			elseif(in_array('editor', $user->roles)) {
+				$data['user_role'] = 'editor';
+			}
+			elseif(in_array('author', $user->roles)) {
+				$data['user_role'] = 'author';
+			}
+			elseif(in_array('contributor', $user->roles)) {
+				$data['user_role'] = 'contributor';
+			}
+			elseif(in_array('subscriber', $user->roles)) {
+				$data['user_role'] = 'subscriber';
+			}
+		}
+		// blog
+		$data['blog'] = get_home_url();
+		$data['blog_lang'] = get_locale(); // will result in "en_US" vs get_bloginfo('language') which returns "en-US"
+		$data['blog_charset'] = get_bloginfo('charset');
+		// dev: enable training mode
+		// $data['is_test'] = 1;
+
+		// build data string ("key1=value1&key2=value2&...")
+		$data_str = '';
+		foreach($data as $key => $value) {
+			if(is_array($value)) {
+				foreach($value as $val) {
+					$data_str .= '&' . $key . '[]=' . urlencode($val);
+				}
+			}
+			else {
+				$data_str .= '&' . $key . '=' . urlencode($value);
+			}
+		}
+		$data_str = substr($data_str, 1);
+
+		// build request
+		$host = 'rest.akismet.com';
+		$request  = 'POST ' . $path . ' HTTP/1.0' . "\r\n";
+		$request .= 'Host: ' . $host . "\r\n";
+		$request .= 'Content-Type: application/x-www-form-urlencoded' . "\r\n";
+		$request .= 'Content-Length: ' . strlen($data_str) . "\r\n";
+		$request .= 'User-Agent: WordPress/' . wp_get_wp_version() . ' | th23 Contact/' . $this->plugin['version'] . "\r\n";
+		$request .= "\r\n";
+		$request .= $data_str;
+
+		// contact Akismet and perform check
+		$response = '';
+		// timeout: 10 seconds
+		if(false != ($fs = @fsockopen('ssl://' . $host, 443, $errno, $errstr, 10))) {
+			fwrite($fs, $request);
+			while(!feof($fs)) {
+				// only read first tcp-ip packet, enough to determine result
+				$response .= fgets($fs, 1160);
+			}
+			fclose($fs);
+			// limit to max two array elements, 2nd element is relevant response
+			$response = explode("\r\n\r\n", $response, 2);
+		}
+
+		// only return explicitly positive / negative responses
+		if(is_array($response) && isset($response[1])) {
+			if(!empty($positive) && $positive === $response[1]) {
+				$answer = 1;
+			}
+			elseif(!empty($negative) && $negative === $response[1]) {
+				$answer = -1;
+			}
+		}
+
+		return $answer;
+
+	}
+
+	// Handle contact form
 	function contact_form($atts = array()) {
 
 		$html = '';
@@ -195,17 +325,17 @@ class th23_contact {
 
 			// get user data for not-logged-in unsers
 			if(!is_user_logged_in()) {
-				$user_name = (isset($_POST['user_name'])) ? stripslashes(sanitize_text_field($_POST['user_name'])) : '';
+				$user_name = (isset($_POST['user_name'])) ? sanitize_text_field(wp_unslash($_POST['user_name'])) : '';
 				// note: check for (valid) e-mail address done before sending
-				$user_mail = (isset($_POST['user_mail'])) ? stripslashes(sanitize_text_field($_POST['user_mail'])) : '';
+				$user_mail = (isset($_POST['user_mail'])) ? sanitize_text_field(wp_unslash($_POST['user_mail'])) : '';
 			}
 			// get message details
-			$mail_subject = (isset($_POST['mail_subject'])) ? stripslashes(sanitize_text_field($_POST['mail_subject'])) : '';
-			$mail_message = (isset($_POST['mail_message'])) ? stripslashes(sanitize_textarea_field($_POST['mail_message'])) : '';
+			$mail_subject = (isset($_POST['mail_subject'])) ? sanitize_text_field(wp_unslash($_POST['mail_subject'])) : '';
+			$mail_message = (isset($_POST['mail_message'])) ? sanitize_textarea_field(wp_unslash($_POST['mail_message'])) : '';
 
 			// verify captcha
 			if(empty($msg) && !is_user_logged_in() && !empty($this->options['captcha']) && !empty($this->options['captcha_public']) && !empty($this->options['captcha_private'])) {
-				$response = isset($_POST['g-recaptcha-response']) ? sanitize_text_field($_POST['g-recaptcha-response']) : '';
+				$response = isset($_POST['g-recaptcha-response']) ? sanitize_text_field(wp_unslash($_POST['g-recaptcha-response'])) : '';
 				$request = wp_remote_get('https://www.google.com/recaptcha/api/siteverify?secret=' . $this->options['captcha_private'] . '&response=' . $response . '&remoteip=' . $_SERVER["REMOTE_ADDR"]);
 				$response_body = wp_remote_retrieve_body($request);
 				$result = json_decode($response_body, true);
@@ -242,6 +372,19 @@ class th23_contact {
 				}
 			}
 
+			// spam check
+			if(empty($msg) && !empty($this->options['spam_check']) && !empty($this->options['spam_engine']) && 'akismet' == $this->options['spam_engine'] && !empty($this->options['spam_key_verified'])) {
+				$answer = $this->akismet_api('check-contact', array('comment_author' => $user_name, 'comment_author_email' => $user_mail, 'comment_content' => $mail_message));
+				// identified as spam
+				if(-1 == $answer) {
+					$msg['spam_detected'] = array('type' => 'error', 'text' => __('Sorry, your message was marked as spam - please use another way of contact', 'th23-contact'));
+				}
+				// unclear answer eg error, timeout, etc
+				elseif(0 == $answer) {
+					$msg['spam_error'] = array('type' => 'error', 'text' => __('Sorry, your message could not be checked for spam - please try again or use another way of contact', 'th23-contact'));
+				}
+			}
+
 			// send message via mail
 			if(empty($msg)) {
 				$subject_line = (!empty($this->options['pre_subject'])) ? $this->options['pre_subject'] . ' ' : '';
@@ -270,8 +413,8 @@ Reply e-mail: %4$s', 'th23-contact'), $user_name, $user_login, $mail_message, $u
 				}
 			}
 
-			// don't show form again upon successful sending
-			if(!empty($msg['sending_success'])) {
+			// don't show form again upon successful sending or in case spam was detected
+			if(!empty($msg['sending_success']) || !empty($msg['spam_detected'])) {
 				return $html;
 			}
 

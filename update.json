@@ -1,5 +1,62 @@
 {
-	"name" : "th23 Contact",
-	"slug" : "th23-contact",
-	"version" : "3.0.7"
+    "name": "th23 Contact",
+    "slug": "th23-contact",
+    "tags": {
+        "contact": "contact",
+        "form": "form",
+        "block": "block",
+        "shortcode": "shortcode"
+    },
+    "contributors": {
+        "th23": {
+            "profile": "https://profiles.wordpress.org/th23/",
+            "avatar": "https://thorstenhartmann.de/avatar.png?v=3.1.0",
+            "display_name": "Thorsten"
+        }
+    },
+    "homepage": "https://github.com/th23x/th23-contact",
+    "last_updated": "2025-04-24 10:15:00",
+    "version": "3.1.0",
+    "download_link": "https://github.com/th23x/th23-contact/releases/latest/download/th23-contact-v3.1.0.zip",
+    "requires_php": "8.0",
+    "requires": "4.2",
+    "tested": "6.8",
+    "banners": {
+        "low": "https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/banner-772x250.jpg?v=3.1.0",
+        "high": "https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/banner-1544x500.jpg?v=3.1.0",
+        "2x": "https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/banner-1544x500.jpg?v=3.1.0",
+        "1x": "https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/banner-772x250.jpg?v=3.1.0"
+    },
+    "screenshots": {
+        "1": {
+            "src": "https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-1.jpg?v=3.1.0",
+            "caption": "Contact form (logged in user)"
+        },
+        "2": {
+            "src": "https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-2.jpg?v=3.1.0",
+            "caption": "Contact form (visitor, needs to solve captcha)"
+        },
+        "3": {
+            "src": "https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-3.jpg?v=3.1.0",
+            "caption": "Plugin settings"
+        }
+    },
+    "upgrade_notice": {
+        "v3.1.0": "<ul><li><p>check plugin settings, especially consider new spam protection option</p></li></ul>",
+        "v3.0.7": "<ul><li><p>n/a</p></li></ul>"
+    },
+    "icons": {
+        "1x": "assets/icon-128x128.png?v=3.1.0"
+    },
+    "author": "<a href=\"https://profiles.wordpress.org/th23/\">Thorsten</a>",
+    "author_profile": "https://profiles.wordpress.org/th23/",
+    "donate_link": "https://github.com/th23x/th23-contact",
+    "support_url": "https://github.com/th23x/th23-contact",
+    "sections": {
+        "description": "<p>Simple contact form via block or legacy shortcode with optional spam protection via Akismet and reCaptcha</p><p>Provide your users and visitors a <strong>simple and straight forward contact form</strong>.</p><p>The <strong>modern design</strong> is very clear, easy to navigate and with light-weight JS and CSS code. One big benefit is its <strong>flexible positioning</strong> in pages and posts as a <strong>modern style block or classic shortcode</strong>.</p><p>To keep your website safe, it comes with built in <strong>spam and bot protection</strong>, by using Akisment and reCaptcha for messages sent by visitors. The plugin is continuously improved and used on live websites since 2012.</p><p>th23 Contact is built with some few goals in mind:</p><ul><li><strong>Simple and straight forward</strong> option for user to contact you</li><li><strong>Light-weight code basis</strong> without overheads and frameworks</li><li><strong>Easy to adapt styling</strong> to fit any page design and layout</li><li><strong>Fight spam and bots</strong> without unnecessary hurdles (admittedly it's a compromise)</li></ul><p>See it in action on my <a href=\"https://th23.net/contact/\" title=\"\">Contact page</a>.</p><h3>Usage</h3><p>Simply insert a new <code>th23 Contact form</code> block into the post / page using the plus sign in the Gutenberg editor or start typing <code>/th23 Contact form</code>.</p><p>Alternatively use the <code>[th23-contact]</code> shortcode directly in the source code editor view of a post / page or insert it as a <strong>legacy shortcode block</strong>.</p><blockquote style=\"padding: 0 0.5em; border-left: 5px solid rgb(9, 105, 218);\"><div style=\"color: rgb(9, 105, 218);\">&#128488;&#65039; <strong>NOTE</strong></div><p>The th23 Contact form block and / or shortcode <strong>can only be used once per post / page</strong>!</p><p>Any second instance in the same post / page will be ignored upon frontend rendering and not show up.</p></blockquote><blockquote style=\"padding: 0 0.5em; border-left: 5px solid rgb(26, 127, 55);\"><div style=\"color: rgb(26, 127, 55);\">&#128161; <strong>TIP</strong></div><p>Ensure th23 contact form is enabled for the sepcific post / page - see admin area under <code>Settings</code> &#8594; <code>th23 Contact</code>.</p></blockquote>",
+        "installation": "<p>For a manual installation upload extracted <code>th23-contact</code> folder to your <code>wp-content/plugins</code> directory.</p><p>The plugin is <strong>configured via its settings page in the admin area</strong>. Find all options under <code>Settings</code> &#8594; <code>th23 Contact</code>. The options come with a description of the setting and its behavior directly next to the respective settings field.</p>",
+        "faq": "<h4>Despite reCaptcha being activated, <strong>I receive many spam contact messages</strong>?</h4><div><p>reCaptcha is around for a long time and available in various versions. Its version 2 was added to this plugin some years ago. Unfortunately with latest advances in computing, <strong>it has to be considered \"broken\" by now</strong>.</p><p>Since version 3.1.0 of this plugin, there is (additionally) the <strong>option to use Akismet to detect spam</strong>. It uses a much broader approach and thus for now seems to show significatly better detection of spam. <strong>Activate it on the plugins settings page</strong>.</p></div><h4>Can the plugin be activated on <strong>multiple selected pages / posts only</strong>?</h4><div><p>You can enable the block / shortcode for selected pages / posts only to <strong>save your users unnecessarily loading JavaScript and CSS files</strong>.</p><p>But for convenience the <code>th23 Contact</code> block / <code>[th23-contact]</code> shortcode can also be enabled for <code>All pages</code>, <code>All posts</code> or an selected set of pages / posts. Simply visit the plugin settings in your admin area. Under \"Pages / Posts\" you have the free choice.</p><p>To select multiple items on a PC simply keep the \"Ctrl\" key pressed any click on the pages / posts you want to select.</p></div>",
+        "changelog": "<h4>v3.1.0</h4><ul><li><p>enhancement: add spam detection via Akismet</p></li><li><p>enhancement: upgrade to th23 Admin class 1.6.1</p></li><li><p>fix: properly unslash form data</p></li><li><p>fix: ensure proper markup for some option descriptions</p></li><li><p>fix: minor changes in plugin description etc</p></li></ul><h4>v3.0.7</h4><ul><li><p>enhancement: move upgrade handling to separate class loaded if required also from frontend site calls</p></li></ul><h4>v3.0.6</h4><ul><li><p>fix: update underlying th23 admin class to properly relate to parent version for plugin version</p></li></ul><h4>v3.0.5</h4><ul><li><p>fix: ensure proper update detection with option to handle any required changes automatically after a new version has been installed</p></li><li><p>fix: prevent WP warnings upon too early usage of translation functions</p></li><li><p>fix: prevent PHP warnings for (potentially) not initiated variable</p></li></ul><h4>v3.0.4</h4><ul><li><p>fix: ensure LF line endings to avoid errors on plugin activation</p></li></ul><h4>v3.0.1</h4><ul><li><p>fix: ensure settings are properly taken over from previous versions</p></li></ul><h4>v3.0.0</h4><ul><li><p>enhancement: add contact form block for Gutenberg editor</p></li><li><p>enhancement: switch admin basis to common th23 Admin class</p></li></ul>",
+        "screenshots": "<ol><li><a href=\"https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-1.jpg?v=3.1.0\"><img src=\"https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-1.jpg?v=3.1.0\" alt=\"Contact form (logged in user)\"></a><p>Contact form (logged in user)</p></li><li><a href=\"https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-2.jpg?v=3.1.0\"><img src=\"https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-2.jpg?v=3.1.0\" alt=\"Contact form (visitor, needs to solve captcha)\"></a><p>Contact form (visitor, needs to solve captcha)</p></li><li><a href=\"https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-3.jpg?v=3.1.0\"><img src=\"https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-3.jpg?v=3.1.0\" alt=\"Plugin settings\"></a><p>Plugin settings</p></li></ol>"
+    }
 }

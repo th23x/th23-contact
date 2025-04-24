@@ -32,13 +32,15 @@ class th23_contact_admin extends th23_contact {
 		$this->plugin['icon'] = array('square' => 'img/icon-square.png', 'horizontal' => 'img/icon-horizontal.png');
 		$this->plugin['support_url'] = 'https://github.com/th23x/th23-contact/issues';
 		$this->plugin['requirement_notices'] = array();
+		// update: alternative update source
+		$this->plugin['update_url'] = 'https://github.com/th23x/th23-contact/releases/latest/download/update.json';
 
 		// Load and setup required th23 Admin class
 		if(file_exists($this->plugin['dir_path'] . '/inc/th23-admin-class.php')) {
 			require($this->plugin['dir_path'] . '/inc/th23-admin-class.php');
-			$this->admin = new th23_admin($this);
+			$this->admin = new th23_admin_v161($this);
 		}
-		if(class_exists('th23_admin') && !empty($this->admin)) {
+		if(!empty($this->admin)) {
 			add_action('init', array(&$this, 'setup_admin_class'));
 		}
 		else {
@@ -78,23 +80,27 @@ class th23_contact_admin extends th23_contact {
 		// admin class is language agnostic, except translations in parent i18n variable
 		// note: need to populate $this->i18n earliest at init hook to get user locale
 		$this->i18n = array(
-			'Settings' => __('Settings'),
+			'Settings' => __('Settings', 'th23-contact'),
 			/* translators: parses in plugin version number */
 			'Version %s' => __('Version %s', 'th23-contact'),
 			/* translators: parses in plugin name */
 			'Copy from %s' => __('Copy from %s', 'th23-contact'),
-			'Support' => __('Support'),
-			'Done' => __('Done'),
-			'Settings saved.' => __('Settings saved.'),
-			'+' => __('+'),
-			'-' => __('-'),
-			'Save Changes' => __('Save Changes'),
+			'Support' => __('Support', 'th23-contact'),
+			'Done' => __('Done', 'th23-contact'),
+			'Settings saved.' => __('Settings saved.', 'th23-contact'),
+			'+' => __('+', 'th23-contact'),
+			'-' => __('-', 'th23-contact'),
+			'Save Changes' => __('Save Changes', 'th23-contact'),
 			/* translators: parses in plugin author name / link */
-			'By %s' => __('By %s'),
-			'Visit plugin site' => __('Visit plugin site'),
-			'Error' => __('Error'),
+			'By %s' => __('By %s', 'th23-contact'),
+			'Visit plugin site' => __('Visit plugin site', 'th23-contact'),
+			'Error' => __('Error', 'th23-contact'),
 			/* translators: 1: option name, 2: opening a tag of link to support/ plugin page, 3: closing a tag of link */
 			'Invalid combination of input field and default value for "%1$s" - please %2$scontact the plugin author%3$s' => __('Invalid combination of input field and default value for "%1$s" - please %2$scontact the plugin author%3$s', 'th23-contact'),
+			'Updates' => __('Updates', 'th23-contact'),
+			'If disabled or unreachable, updates will use default WordPress repository' => __('If disabled or unreachable, updates will use default WordPress repository', 'th23-contact'),
+			/* translators: parses in repository url */
+			'Update from %s' => __('Update from %s', 'th23-contact'),
 		);
 
 	}
@@ -118,22 +124,26 @@ class th23_contact_admin extends th23_contact {
 		// Settings: Define plugin options
 		$this->plugin['options'] = array();
 
+		// terms of usage link / title (used more than once)
+		$terms_title = (empty($terms_title = get_option('th23_terms_title'))) ? __('Terms of Usage', 'th23-contact') : $terms_title;
+		$terms_link = (!empty($terms_url = get_option('th23_terms_url'))) ? '<a href="' . esc_url($terms_url) . '" target="_blank">' . $terms_title . '</a>' : $terms_title;
+
 		// post_ids
 
-		$post_ids_description = __('Limit usage of contact shortcode to selected pages / posts, reducing unnecessary CSS loading - leave empty to use on all pages and posts', 'th23-contact');
-		/* translators: inserts shortcode */
-		$post_ids_description .= '<br />' . sprintf(__('Important: Requires contact shortcode %s placed in page / post to show contact form', 'th23-contact'), '<code style="font-style: normal;">[th23-contact]</code>');
-		$post_ids_description .= '<br />' . __('Note: Shortcode can only be used once per page / post', 'th23-contact');
+		$description = __('Limit usage of contact shortcode to selected pages / posts, reducing unnecessary CSS loading - leave empty to use on all pages and posts', 'th23-contact');
+		/* translators: inserts shortcode within "<code></code>" tags */
+		$description .= '<br />' . sprintf(__('Important: Requires contact shortcode %s placed in page / post to show contact form', 'th23-contact'), '<code style="font-style: normal;">[th23-contact]</code>');
+		$description .= '<br />' . __('Note: Shortcode can only be used once per page / post', 'th23-contact');
 
 		$this->plugin['options']['post_ids'] = array(
 			'title' => __('Pages / Posts', 'th23-contact'),
-			'description' => $post_ids_description,
 			'element' => 'list',
 			'default' => array(
 				'multiple' => array(''),
 				'pages' => __('All pages', 'th23-contact'),
 				'posts' => __('All posts', 'th23-contact'),
 			),
+			'description' => $description,
 			'attributes' => array(
 				'size' => 8,
 			),
@@ -141,14 +151,14 @@ class th23_contact_admin extends th23_contact {
 
 		$pages = get_pages();
 		foreach($pages as $page) {
-			/* translators: %s is page title */
-			$this->plugin['options']['post_ids']['default'][$page->ID] = esc_html(sprintf(__('Page: %s', 'th23-contact'), wp_strip_all_tags($page->post_title)));
+			/* translators: parses in page title */
+			$this->plugin['options']['post_ids']['default'][$page->ID] = esc_attr(sprintf(__('Page: %s', 'th23-contact'), wp_strip_all_tags($page->post_title)));
 		}
 
 		$posts = get_posts(array('numberposts' => -1, 'orderby' => 'post_title', 'order' => 'ASC'));
 		foreach($posts as $post) {
-			/* translators: %s is post title */
-			$this->plugin['options']['post_ids']['default'][$post->ID] = esc_html(sprintf(__('Post: %s', 'th23-contact'), wp_strip_all_tags($post->post_title)));
+			/* translators: parses in post title */
+			$this->plugin['options']['post_ids']['default'][$post->ID] = esc_attr(sprintf(__('Post: %s', 'th23-contact'), wp_strip_all_tags($post->post_title)));
 		}
 
 		// admin_email
@@ -157,10 +167,10 @@ class th23_contact_admin extends th23_contact {
 
 		$this->plugin['options']['admin_email'] = array(
 			'title' =>  __('Recipient', 'th23-contact'),
-			/* translators: %1$s / %2$s <a> and </a> tags for link to insert admin mail, %3$s current general admin e-mail address */
-			'description' => sprintf(__('Provide mail address for contact form submissions - %1$sclick here%2$s to use your default admin e-mail address (%3$s)', 'th23-contact'), '<a href="" class="copy" data-target="input_admin_email" data-copy="' . esc_attr($admin_email) . '">', '</a>', esc_html($admin_email)),
 			'default' => '',
 			'shared' => true,
+			/* translators: %1$s / %2$s <a> and </a> tags for link to insert admin mail, %3$s current general admin e-mail address within "<code></code>" tags */
+			'description' => sprintf(__('Provide mail address for contact form submissions - %1$sclick here%2$s to use your default admin e-mail address %3$s', 'th23-contact'), '<a href="" class="copy" data-target="input_admin_email" data-copy="' . esc_attr($admin_email) . '">', '</a>', '<code>' . esc_attr($admin_email) . '</code>'),
 			'save_after' => 'save_admin_email',
 		);
 
@@ -168,38 +178,89 @@ class th23_contact_admin extends th23_contact {
 
 		$this->plugin['options']['pre_subject'] = array(
 			'title' =>  __('Subject prefix', 'th23-contact'),
-			'description' => __('Optional prefix to be added before the subject of mails sent from the contact form', 'th23-contact'),
 			'default' => '',
+			'description' => __('Optional prefix to be added before the subject of mails sent from the contact form', 'th23-contact'),
+		);
+
+		// spam_check
+
+		$this->plugin['options']['spam_check'] = array(
+			'title' => __('Spam check', 'th23-contact'),
+			'element' => 'checkbox',
+			'default' => array(
+				'single' => 0,
+				0 => '',
+				1 => __('Check contact message for spam before sending', 'th23-contact'),
+			),
+			'attributes' => array(
+				'data-childs' => '.option-spam_engine,.option-spam_key',
+			),
+		);
+
+		// spam_engine
+		// todo: add GDPR compliant antispam bee as option, once available via API
+
+		$description = __('Note: Selected spam detection engine does not need to be installed as plugin', 'th23-contact');
+		/* translators: parses in link with/or title to sites terms & conditions, as defined by admin */
+		$description .= '<br />' . sprintf(__('Note: Consider to include according information into %s', 'th23-contact'), $terms_link);
+
+		$this->plugin['options']['spam_engine'] = array(
+			'render' => function() { return '<label for="input_spam_engine[]">' . __('Spam detection engine', 'th23-contact') . '</label> '; },
+			'element' => 'dropdown',
+			'default' => array(
+				'single' => 'akismet',
+				/* translators: 1: name of service eg "Akismet", 2: provider name eg "Automattic" */
+				'akismet' => sprintf(__('%1$s by %2$s', 'th23-contact'), 'Akismet', 'Automattic'),
+			),
+			'description' => $description,
+		);
+
+		// spam_key
+
+		$this->plugin['options']['spam_key'] = array(
+			'render' => function() { return '<label for="input_spam_key">' . __('API key', 'th23-contact') . '</label> '; },
+			'default' => '',
+			/* translators: parses in name of service, sentence will be follow by a half sentence how to obtain the key eg " - get it from..." */
+			'description' => sprintf(__('Important: %s requires valid API key', 'th23-contact'), '<em>Akismet</em>') . ' - ' . $this->spam_key_source(),
+		);
+
+		// spam_key_verified
+
+		$this->plugin['options']['spam_key_verified'] = array(
+			'default' => '',
+			'element' => 'hidden',
+			'save_before' => 'save_spam_key_verified',
 		);
 
 		// visitors
 
 		$this->plugin['options']['visitors'] = array(
 			'title' => __('Visitors', 'th23-contact'),
-			'description' => __('If disabled, unregistered visitors will see a notice requiring them to login for sending a message', 'th23-contact'),
 			'element' => 'checkbox',
 			'default' => array(
 				'single' => 0,
 				0 => '',
 				1 => __('Enable contact form for unregistered users', 'th23-contact'),
 			),
+			'description' => __('If disabled, unregistered visitors will see a notice requiring them to login for sending a message', 'th23-contact'),
 			'attributes' => array(
 				'data-childs' => '.option-captcha,.option-terms',
 			),
 		);
 
 		// captcha
+		// todo: review performance of akismet spam detection and consider to remove legacy recaptcha option
 
 		$this->plugin['options']['captcha'] = array(
 			'title' => '<i>reCaptcha</i>',
-			/* translators: 1: "reCaptcha v2" as name of the service, 2: "Google" as provider name, 3/4: opening and closing tags for a link to Google reCaptcha website */
-			'description' => sprintf(__('Important: %1$s is an external service by %2$s which requires %3$ssigning up for free keys%4$s - usage will embed external scripts and transfer data to %2$s', 'th23-contact'), '<i>reCaptcha v2</i>', '<i>Google</i>', '<a href="https://www.google.com/recaptcha/" target="_blank">', '</a>'),
 			'element' => 'checkbox',
 			'default' => array(
 				'single' => 0,
 				0 => '',
 				1 => __('Unregistered users need to solve a captcha for better protection against spam and bots', 'th23-contact'),
 			),
+			/* translators: 1: "reCaptcha v2" as name of the service, 2: "Google" as provider name, 3/4: opening and closing tags for a link to Google reCaptcha website */
+			'description' => sprintf(__('Important: %1$s is an external service by %2$s which requires %3$ssigning up for free keys%4$s - usage will embed external scripts and transfer data to %2$s', 'th23-contact'), '<em>reCaptcha v2</em>', '<em>Google</em>', '<a href="https://www.google.com/recaptcha/" target="_blank">', '</a>'),
 			'attributes' => array(
 				'data-childs' => '.option-captcha_public,.option-captcha_private',
 			),
@@ -224,30 +285,42 @@ class th23_contact_admin extends th23_contact {
 
 		// terms
 
-		$terms = (empty($title = get_option('th23_terms_title'))) ? __('Terms of Usage', 'th23-contact') : $title;
-		$terms = (!empty($url = get_option('th23_terms_url'))) ? '<a href="' . esc_url($url) . '" target="_blank">' . esc_html($terms) . '</a>' : esc_html($terms);
-		$terms_description = '<a href="" class="toggle-switch">' . __('Show / hide examples', 'th23-contact') . '</a>';
-		$terms_description .= '<span class="toggle-show-hide" style="display: none;"><br />' . __('Example:', 'th23-contact');
-		/* translators: %s: link with/or title to sites terms & conditions, as defined by admin */
-		$terms_description .= '&nbsp;<input type="checkbox" />' . sprintf(__('I accept the %s and agree with processing my data', 'th23-contact'), $terms);
-		/* translators: %s: link to general options page in admin */
-		$terms_description .= '<br />' . sprintf(__('Note: For changing title and link shown see %s', 'th23-contact'), '<a href="options-general.php#th23_terms">' . __('General Settings') . '</a>');
-		$terms_description .= '</span>';
+		$description = '<a href="" class="toggle-switch">' . __('Show / hide examples', 'th23-contact') . '</a>';
+		$description .= '<span class="toggle-show-hide" style="display: none;"><br />' . __('Example:', 'th23-contact');
+		/* translators: parses in link with/or title to sites terms & conditions, as defined by admin */
+		$description .= '&nbsp;<input type="checkbox" />' . sprintf(__('I accept the %s and agree with processing my data', 'th23-contact'), $terms_link);
+		/* translators: parses in link to general options page in admin */
+		$description .= '<br />' . sprintf(__('Note: For changing title and link shown see %s', 'th23-contact'), '<a href="options-general.php#th23_terms">' . __('General Settings') . '</a>');
+		$description .= '</span>';
 
 		$this->plugin['options']['terms'] = array(
 			'title' => __('Terms', 'th23-contact'),
-			'description' => $terms_description,
 			'element' => 'checkbox',
 			'default' => array(
 				'single' => 0,
 				0 => '',
 				1 => __('Unregistered users are required to accept terms of usage before sending their message', 'th23-contact'),
 			),
+			'description' => $description,
 		);
 
 		// Settings: Define presets for template option values (pre-filled, but changable by user)
 		$this->plugin['presets'] = array();
 
+	}
+
+	// Show where to obtain API key from [spam_key]
+	function spam_key_source() {
+		$html = '';
+		if(is_callable(array('Akismet', 'get_api_key')) && !empty($akismet_key = Akismet::get_api_key())) {
+			/* translators: 1: / 2: <a> / </a> tags for link to copy API key, 3: API key to copy within "<code></code>" tags, 4: name of service */
+			$html .= sprintf(__('%1$sclick here%2$s to use %3$s from installed %4$s plugin', 'th23-contact'), '<a href="" class="copy" data-target="input_spam_key" data-copy="' . esc_attr($akismet_key) . '">', '</a>', '<code>' . esc_attr($akismet_key) . '</code>', '<em>Akismet</em>');
+		}
+		else {
+			/* translators: "it" refers to API key, s: name of service */
+			$html .= sprintf(__('%1$sclick here%2$s to get it from the %3$s website', 'th23-contact'), '<a href="https://akismet.com" target="_blank">', '</a>', '<em>Akismet</em>');
+		}
+		return $html;
 	}
 
 	// Install
@@ -307,16 +380,24 @@ class th23_contact_admin extends th23_contact {
 			$this->plugin['requirement_notices']['multisite'] = '<strong>' . __('Warning', 'th23-contact') . '</strong>: ' . __('Your are running a multisite installation - the plugin is not designed for this setup and therefore might not work properly', 'th23-contact');
 		}
 
-		// customization: Check - e-mail address as recipient for contact form requests must be given
+		// customization: Check - e-mail address as recipient for contact form requests must be given [admin_email]
 		if(empty($this->options['admin_email']) || !is_email($this->options['admin_email'])) {
 			$this->plugin['requirement_notices']['admin_email'] = '<strong>' . __('Error', 'th23-contact') . '</strong>: ' . __('No valid e-mail address is specified as recipient - contact form is disabled until you specify one', 'th23-contact');
 		}
 
-		// customization: Check - reCaptcha requires a public and private key to work
-		if(!empty($this->options['captcha']) && (empty($this->options['captcha_public']) || empty($this->options['captcha_private']))) {
+		// customization: Check - verified API key is stored, if Akismet is enabled [spam_key_verified]
+		if(!empty($this->options['spam_check']) && !empty($this->options['spam_engine']) && 'akismet' == $this->options['spam_engine'] && empty($this->options['spam_key_verified'])) {
 			$notice = '<strong>' . __('Error', 'th23-contact') . '</strong>: ';
-			/* translators: Parses in "reCaptcha v2" as service name */
-			$notice .= sprintf(__('%s requires a public and a private key to work - despite your settings it will be disabled until you define them', 'th23-contact'), '<em>reCaptcha v2</em>');
+			/* translators: parses in "Akismet" as service name */
+			$notice .= sprintf(__('%s requires a valid API key - spam check will be disabled until you provide one', 'th23-contact'), '<em>Akismet</em>');
+			$this->plugin['requirement_notices']['spam_check'] = $notice;
+		}
+
+		// customization: Check - public and private are provided, if reCaptcha is enabled [captcha]
+		if(!empty($this->options['visitors']) && !empty($this->options['captcha']) && (empty($this->options['captcha_public']) || empty($this->options['captcha_private']))) {
+			$notice = '<strong>' . __('Error', 'th23-contact') . '</strong>: ';
+			/* translators: parses in "reCaptcha v2" as service name */
+			$notice .= sprintf(__('%s requires a public and a private key - it will be disabled until you provide these', 'th23-contact'), '<em>reCaptcha v2</em>');
 			$this->plugin['requirement_notices']['captcha'] = $notice;
 		}
 
@@ -368,7 +449,7 @@ class th23_contact_admin extends th23_contact {
 		}
 	}
 
-	// Save Settings: Warn the user if no (valid) e-mail address is specified
+	// Save Settings (after): Warn the user if no (valid) e-mail address is specified [admin_email]
 	function save_admin_email($new_options, $options_unfiltered) {
 		// re-check requirement, as latest save (executed) after prerequisites check, might have changed things
 		if(empty($this->options['admin_email']) || !is_email($this->options['admin_email'])) {
@@ -380,13 +461,30 @@ class th23_contact_admin extends th23_contact {
 		return $new_options;
 	}
 
-	// Save Settings: Warn the user if now activated, but required keys are missing
+	// Save Settings (before): Verify API key and warn if check fails  [spam_key_verified]
+	function save_spam_key_verified($new_options, $options_unfiltered) {
+		// if key is valid, store as verified, otherwise keep spam_key_verified empty
+		$new_options['spam_key_verified'] = (1 === $this->akismet_api('verify-key', array('api_key' => $new_options['spam_key']))) ? $new_options['spam_key'] : '';
+		// warn if new options intended to enable spam check with Akismet, but there will be no verified API key
+		if(!empty($new_options['spam_check']) && !empty($new_options['spam_engine']) && 'akismet' == $new_options['spam_engine'] && empty($new_options['spam_key_verified'])) {
+			$notice = '<strong>' . __('Error', 'th23-contact') . '</strong>: ';
+			/* translators: parses in "Akismet" as service name */
+			$notice .= sprintf(__('%s requires a valid API key - spam check will be disabled until you provide one', 'th23-contact'), '<em>Akismet</em>');
+			$this->plugin['requirement_notices']['spam_check'] = $notice;
+		}
+		else {
+			unset($this->plugin['requirement_notices']['spam_check']);
+		}
+		return $new_options;
+	}
+
+	// Save Settings (after): Warn the user if reCaptcha is now activated, but required keys are missing [captcha]
 	function save_captcha($new_options, $options_unfiltered) {
 		// re-check requirement, as latest save (executed) after prerequisites check, might have changed things
-		if(!empty($this->options['captcha']) && (empty($this->options['captcha_public']) || empty($this->options['captcha_private']))) {
+		if(!empty($this->options['visitors']) && !empty($this->options['captcha']) && (empty($this->options['captcha_public']) || empty($this->options['captcha_private']))) {
 			$notice = '<strong>' . __('Error', 'th23-contact') . '</strong>: ';
-			/* translators: Parses in "reCaptcha v2" as service name */
-			$notice .= sprintf(__('%s requires a public and a private key to work - despite your settings it will be disabled until you define them', 'th23-contact'), '<i>reCaptcha v2</i>');
+			/* translators: parses in "reCaptcha v2" as service name */
+			$notice .= sprintf(__('%s requires a public and a private key - it will be disabled until you provide these', 'th23-contact'), '<em>reCaptcha v2</em>');
 			$this->plugin['requirement_notices']['captcha'] = $notice;
 		}
 		else {

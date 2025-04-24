@@ -1,9 +1,18 @@
 jQuery(document).ready(function($){
 
+	// handle dismissable notices
+	$('.th23-notice.is-dismissible').each(function() {
+		var notice = $(this);
+		$('button.notice-dismiss', this).click(function() {
+			notice.fadeTo( 100, 0, function() { notice.slideUp( 100, function() { notice.remove(); }); });
+		});
+	});
+
 	// handle changes of screen options
 	$('#th23-admin-screen-options input').change(function() {
 		var data = {
 			action: 'th23_admin_screen_options',
+			plugin: $('#th23-admin-screen-options-plugin').val(),
 			nonce: $('#th23-admin-screen-options-nonce').val(),
 		};
 		// add screen option fields to data dynamically
