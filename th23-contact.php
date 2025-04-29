@@ -1,17 +1,25 @@
 <?php
 /*
 Plugin Name: th23 Contact
-Description: Simple contact form via block or legacy shortcode, optional spam and bot protection for messages by not-registered visitors
-Version: 3.1.0
-Author: Thorsten Hartmann (th23)
-Author URI: https://th23.net
-License: GPL-3.0-or-later
-License URI: https://www.gnu.org/licenses/gpl-3.0.html
+
+Description: Simple contact form via block or legacy shortcode with optional spam protection via Akismet and reCaptcha
+Plugin URI: https://github.com/th23x/th23-contact
+
+Author: Thorsten (th23)
+Author URI: https://thorstenhartmann.de
+Author IMG: https://thorstenhartmann.de/avatar.png
+
+License: GPL-3.0
+License URI: https://github.com/th23x/th23-contact/blob/main/LICENSE
+
+Version: 3.1.1
+
+Requires at least: 4.2
+Tested up to: 6.8
+Requires PHP: 8.0
+
 Text Domain: th23-contact
 Domain Path: /lang
-
-Coded 2012-2025 by Thorsten Hartmann (th23)
-https://th23.net/
 */
 
 // Security - exit if accessed directly
@@ -33,7 +41,7 @@ class th23_contact {
 		$this->plugin['file'] = __FILE__;
 		$this->plugin['basename'] = plugin_basename($this->plugin['file']);
 		$this->plugin['dir_url'] = plugin_dir_url($this->plugin['file']);
-		$this->plugin['version'] = '3.1.0';
+		$this->plugin['version'] = '3.1.1';
 
 		// Load plugin options
 		$this->options = (array) get_option($this->plugin['slug']);

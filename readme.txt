@@ -4,7 +4,7 @@ Donate link: https://github.com/th23x/th23-contact
 Tags: contact, form, block, shortcode
 Requires at least: 4.2
 Tested up to: 6.8
-Stable tag: 3.1.0
+Stable tag: 3.1.1
 Requires PHP: 8.0
 License: GPL-3.0
 License URI: https://github.com/th23x/th23-contact/blob/main/LICENSE
@@ -28,7 +28,7 @@ th23 Contact is built with some few goals in mind:
 * **Easy to adapt styling** to fit any page design and layout
 * **Fight spam and bots** without unnecessary hurdles (admittedly it's a compromise)
 
-See it in action on my [Contact page](https://th23.net/contact/).
+See it in action on my [Contact page](https://thorstenhartmann.de/kontakt/).
 
 = Usage =
 
@@ -56,13 +56,13 @@ The plugin is **configured via its settings page in the admin area**. Find all o
 
 == Frequently Asked Questions ==
 
-= Despite reCaptcha being activated, **I receive many spam contact messages**? =
+= Despite reCaptcha being activated, I receive many spam contact messages? =
 
 reCaptcha is around for a long time and available in various versions. Its version 2 was added to this plugin some years ago. Unfortunately with latest advances in computing, **it has to be considered "broken" by now**.
 
 Since version 3.1.0 of this plugin, there is (additionally) the **option to use Akismet to detect spam**. It uses a much broader approach and thus for now seems to show significatly better detection of spam. **Activate it on the plugins settings page**.
 
-= Can the plugin be activated on **multiple selected pages / posts only**? =
+= Can the plugin be activated on multiple selected pages / posts only? =
 
 You can enable the block / shortcode for selected pages / posts only to **save your users unnecessarily loading JavaScript and CSS files**.
 
@@ -79,6 +79,11 @@ To select multiple items on a PC simply keep the "Ctrl" key pressed any click on
 
 
 == Changelog ==
+
+= v3.1.1 =
+
+* enhancement: upgrade to th23 Plugin Info class 1.0.0
+* fix: upgrade to th23 Admin class 1.6.2
 
 = v3.1.0 =
 
@@ -117,6 +122,10 @@ To select multiple items on a PC simply keep the "Ctrl" key pressed any click on
 
 
 == Upgrade Notice ==
+
+= v3.1.1 =
+
+* n/a
 
 = v3.1.0 =
 

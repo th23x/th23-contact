@@ -1,11 +1,4 @@
 <?php
-/*
-th23 Contact
-Admin area
-
-Coded 2012-2025 by Thorsten Hartmann (th23)
-https://th23.net/
-*/
 
 // Security - exit if accessed directly
 if(!defined('ABSPATH')) {
@@ -38,7 +31,7 @@ class th23_contact_admin extends th23_contact {
 		// Load and setup required th23 Admin class
 		if(file_exists($this->plugin['dir_path'] . '/inc/th23-admin-class.php')) {
 			require($this->plugin['dir_path'] . '/inc/th23-admin-class.php');
-			$this->admin = new th23_admin_v161($this);
+			$this->admin = new th23_admin_v162($this);
 		}
 		if(!empty($this->admin)) {
 			add_action('init', array(&$this, 'setup_admin_class'));
@@ -80,6 +73,7 @@ class th23_contact_admin extends th23_contact {
 		// admin class is language agnostic, except translations in parent i18n variable
 		// note: need to populate $this->i18n earliest at init hook to get user locale
 		$this->i18n = array(
+			'Plugin' => __('Plugin', 'th23-specials'),
 			'Settings' => __('Settings', 'th23-contact'),
 			/* translators: parses in plugin version number */
 			'Version %s' => __('Version %s', 'th23-contact'),
@@ -93,6 +87,7 @@ class th23_contact_admin extends th23_contact {
 			'Save Changes' => __('Save Changes', 'th23-contact'),
 			/* translators: parses in plugin author name / link */
 			'By %s' => __('By %s', 'th23-contact'),
+			'View details' => __('View details', 'th23-specials'),
 			'Visit plugin site' => __('Visit plugin site', 'th23-contact'),
 			'Error' => __('Error', 'th23-contact'),
 			/* translators: 1: option name, 2: opening a tag of link to support/ plugin page, 3: closing a tag of link */
