@@ -12,10 +12,10 @@ Author IMG: https://thorstenhartmann.de/avatar.png
 License: GPL-3.0
 License URI: https://github.com/th23x/th23-contact/blob/main/LICENSE
 
-Version: 3.1.1
+Version: 3.1.3
 
 Requires at least: 4.2
-Tested up to: 6.8
+Tested up to: 6.8.1
 Requires PHP: 8.0
 
 Text Domain: th23-contact
@@ -41,7 +41,7 @@ class th23_contact {
 		$this->plugin['file'] = __FILE__;
 		$this->plugin['basename'] = plugin_basename($this->plugin['file']);
 		$this->plugin['dir_url'] = plugin_dir_url($this->plugin['file']);
-		$this->plugin['version'] = '3.1.1';
+		$this->plugin['version'] = '3.1.3';
 
 		// Load plugin options
 		$this->options = (array) get_option($this->plugin['slug']);

@@ -21,20 +21,22 @@ class th23_contact_admin extends th23_contact {
 			'base' => 'options-general.php',
 			'permission' => 'manage_options',
 		);
-		// icon: "square" 48 x 48px (footer) / "horizontal" 36px height (header, width irrelevant) / both (resized if larger)
+		// icons "square" 48 x 48px (footer) and "horizontal" 36px height (header, width irrelevant) / both (resized if larger)
 		$this->plugin['icon'] = array('square' => 'img/icon-square.png', 'horizontal' => 'img/icon-horizontal.png');
 		$this->plugin['support_url'] = 'https://github.com/th23x/th23-contact/issues';
 		$this->plugin['requirement_notices'] = array();
-		// update: alternative update source
-		$this->plugin['update_url'] = 'https://github.com/th23x/th23-contact/releases/latest/download/update.json';
 
 		// Load and setup required th23 Admin class
 		if(file_exists($this->plugin['dir_path'] . '/inc/th23-admin-class.php')) {
 			require($this->plugin['dir_path'] . '/inc/th23-admin-class.php');
-			$this->admin = new th23_admin_v162($this);
+			$this->admin = new th23_admin_v170($this);
 		}
 		if(!empty($this->admin)) {
 			add_action('init', array(&$this, 'setup_admin_class'));
+			// alternative update source for non-WP.org hosted plugin
+			// important: remove following two lines for WP.org-hosted plugin
+			$this->plugin['update_url'] = 'https://github.com/th23x/th23-contact/releases/latest/download/update.json';
+			add_filter('site_transient_update_plugins', array(&$this->admin, 'update_download'));
 		}
 		else {
 			add_action('admin_notices', array(&$this, 'error_admin_class'));
@@ -73,29 +75,29 @@ class th23_contact_admin extends th23_contact {
 		// admin class is language agnostic, except translations in parent i18n variable
 		// note: need to populate $this->i18n earliest at init hook to get user locale
 		$this->i18n = array(
-			'Plugin' => __('Plugin', 'th23-specials'),
-			'Settings' => __('Settings', 'th23-contact'),
-			/* translators: parses in plugin version number */
-			'Version %s' => __('Version %s', 'th23-contact'),
+			// reviewer: to keep consistency some admin language strings are used in sync with core
+			'Settings' => __('Settings'),
+			/* translators: parses in version number */
+			'Version %s' => __('Version %s'),
 			/* translators: parses in plugin name */
 			'Copy from %s' => __('Copy from %s', 'th23-contact'),
-			'Support' => __('Support', 'th23-contact'),
-			'Done' => __('Done', 'th23-contact'),
-			'Settings saved.' => __('Settings saved.', 'th23-contact'),
-			'+' => __('+', 'th23-contact'),
-			'-' => __('-', 'th23-contact'),
-			'Save Changes' => __('Save Changes', 'th23-contact'),
-			/* translators: parses in plugin author name / link */
-			'By %s' => __('By %s', 'th23-contact'),
-			'View details' => __('View details', 'th23-specials'),
-			'Visit plugin site' => __('Visit plugin site', 'th23-contact'),
-			'Error' => __('Error', 'th23-contact'),
+			'Support' => __('Support'),
+			'Done' => __('Done'),
+			'Settings saved.' => __('Settings saved.'),
+			'+' => __('+'),
+			'-' => __('-'),
+			'Save Changes' => __('Save Changes'),
+			/* translators: parses in author */
+			'By %s' => __('By %s'),
+			'View details' => __('View details'),
+			'Visit plugin site' => __('Visit plugin site'),
+			'Error' => __('Error'),
 			/* translators: 1: option name, 2: opening a tag of link to support/ plugin page, 3: closing a tag of link */
 			'Invalid combination of input field and default value for "%1$s" - please %2$scontact the plugin author%3$s' => __('Invalid combination of input field and default value for "%1$s" - please %2$scontact the plugin author%3$s', 'th23-contact'),
-			'Updates' => __('Updates', 'th23-contact'),
-			'If disabled or unreachable, updates will use default WordPress repository' => __('If disabled or unreachable, updates will use default WordPress repository', 'th23-contact'),
-			/* translators: parses in repository url */
-			'Update from %s' => __('Update from %s', 'th23-contact'),
+			/* translators: parses in repository url for non-WP.org hosted plugin */
+			'Updated via %s' => __('Updated via %s', 'th23-contact'),
+			/* translators: parses in plugin information source url */
+			'Failed to load plugin information from %s' => __('Failed to load plugin information from %s', 'th23-contact'),
 		);
 
 	}

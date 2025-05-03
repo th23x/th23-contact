@@ -161,6 +161,9 @@ To select multiple items on a PC simply keep the "Ctrl" key pressed any click on
 // changelog [mandatory]
 // note: sorted by version, content can be a string or an array for a list, at least info for current version must be present
 $plugin['changelog'] = array(
+	'v3.1.3' => array(
+		'fix: upgrade to th23 Admin class 1.7.0, removing some inconsistencies regarding own updater incl removal of option to chose update source and ensure proper escaping of all output',
+	),
 	'v3.1.1' => array(
 		'enhancement: upgrade to th23 Plugin Info class 1.0.0',
 		'fix: upgrade to th23 Admin class 1.6.2',
@@ -198,6 +201,7 @@ $plugin['changelog'] = array(
 // upgrade_notice [mandatory]
 // note: sorted by version, content can be a string or an array for a list, at least info for current version must be present
 $plugin['upgrade_notice'] = array(
+	'v3.1.3' => 'n/a',
 	'v3.1.1' => 'n/a',
 	'v3.1.0' => 'check plugin settings, especially consider new spam protection option',
 	'v3.0.7' => 'n/a',

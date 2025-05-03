@@ -3,8 +3,8 @@ Contributors: th23
 Donate link: https://github.com/th23x/th23-contact
 Tags: contact, form, block, shortcode
 Requires at least: 4.2
-Tested up to: 6.8
-Stable tag: 3.1.1
+Tested up to: 6.8.1
+Stable tag: 3.1.3
 Requires PHP: 8.0
 License: GPL-3.0
 License URI: https://github.com/th23x/th23-contact/blob/main/LICENSE
@@ -80,6 +80,10 @@ To select multiple items on a PC simply keep the "Ctrl" key pressed any click on
 
 == Changelog ==
 
+= v3.1.3 =
+
+* fix: upgrade to th23 Admin class 1.7.0, removing some inconsistencies regarding own updater incl removal of option to chose update source and ensure proper escaping of all output
+
 = v3.1.1 =
 
 * enhancement: upgrade to th23 Plugin Info class 1.0.0
@@ -122,6 +126,10 @@ To select multiple items on a PC simply keep the "Ctrl" key pressed any click on
 
 
 == Upgrade Notice ==
+
+= v3.1.3 =
+
+* n/a
 
 = v3.1.1 =
 

@@ -1,4 +1,4 @@
-# <img alt="th23 Contact" src="https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/icon-horizontal.png?v=3.1.1" width="200">
+# <img alt="th23 Contact" src="https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/icon-horizontal.png?v=3.1.3" width="200">
 
 Simple contact form via block or legacy shortcode with optional spam protection via Akismet and reCaptcha
 
@@ -20,9 +20,9 @@ th23 Contact is built with some few goals in mind:
 
 See it in action on my [Contact page](https://thorstenhartmann.de/kontakt/).
 
-> <img alt="" title="Contact form (logged in user)" src="https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-1.jpg?v=3.1.1" width="400">
-> <img alt="" title="Contact form (visitor, needs to solve captcha)" src="https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-2.jpg?v=3.1.1" width="400">
-> <img alt="" title="Plugin settings" src="https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-3.jpg?v=3.1.1" width="400">
+> <img alt="" title="Contact form (logged in user)" src="https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-1.jpg?v=3.1.3" width="400">
+> <img alt="" title="Contact form (visitor, needs to solve captcha)" src="https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-2.jpg?v=3.1.3" width="400">
+> <img alt="" title="Plugin settings" src="https://raw.githubusercontent.com/th23x/th23-contact/refs/heads/main/assets/screenshot-3.jpg?v=3.1.3" width="400">
 
 
 ## ⚙️ Setup
